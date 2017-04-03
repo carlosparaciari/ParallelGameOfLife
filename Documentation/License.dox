@@ -1,0 +1,25 @@
+/**
+\page GAMEOFLIFELicense GAMEOFLIFE Licenses
+
+\li \ref LicenseGAMEOFLIFE
+\li \ref LicenseEigen
+\li \ref LicenseBoost
+\li \ref LicenseOpenCV
+
+\section LicenseGAMEOFLIFE The GAMEOFLIFE License
+
+\include LICENSE.txt
+
+\section LicenseEigen The Eigen License
+
+\include LICENSE_Eigen.txt
+
+\section LicenseBoost The Boost License
+
+\include LICENSE_Boost.txt
+
+\section LicenseOpenCV The OpenCV License
+
+\include LICENSE_OpenCV.txt
+
+*/
