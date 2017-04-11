@@ -13,7 +13,7 @@
 #============================================================================*/
 
 set(GAMEOFLIFE_APPS
-  golMyFirstApp
+  golSerialApp
 )
 foreach(app ${GAMEOFLIFE_APPS})
   add_executable(${app} ${app}.cpp)

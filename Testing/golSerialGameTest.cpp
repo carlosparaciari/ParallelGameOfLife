@@ -12,24 +12,12 @@
 
 =============================================================================*/
 
-#ifndef golMyFunctions_h
-#define golMyFunctions_h
+#include "catch.hpp"
+#include "golCatchMain.h"
+#include "golSerialGame.h"
+#include <iostream>
+#include <vector>
 
-#include "golWin32ExportHeader.h"
-
-/**
-* \file golMyFunctions.h
-* \brief Various Utilities.
-* \ingroup utilities
-*/
-namespace gol
-{
-
-/**
-* \brief My first function, computes something.
-*/
-GAMEOFLIFE_WINEXPORT double MyFirstFunction(int a);
-
-} // end namespace
-
-#endif
+TEST_CASE( "Something about the class implementing the Serial version of GoL", "[serial_gol]" ) {
+  REQUIRE( true );
+}

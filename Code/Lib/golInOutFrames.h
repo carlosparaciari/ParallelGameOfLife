@@ -12,17 +12,20 @@
 
 =============================================================================*/
 
-#include "catch.hpp"
-#include "golCatchMain.h"
-#include <iostream>
+#ifndef golInOutFrames_h
+#define golInOutFrames_h
 
-TEST_CASE( "My first test", "[init]" ) {
+#include "golWin32ExportHeader.h"
 
-  int expectedNumberOfArgs = 2;
-  if (gol::argc != expectedNumberOfArgs)
-  {
-    std::cerr << "Usage: mpMyFirstCatchTest fileName.txt" << std::endl;
-    REQUIRE( gol::argc == expectedNumberOfArgs);
-  }
-  REQUIRE(true);
-}
+/**
+* \file golInOutFrames.h
+* \brief This class handles the input and output of frames (Life 1.06 format).
+* \ingroup utilities
+*/
+namespace gol
+{
+
+
+} // end namespace
+
+#endif

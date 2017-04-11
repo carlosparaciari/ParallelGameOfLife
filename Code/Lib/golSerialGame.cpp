@@ -12,18 +12,9 @@
 
 =============================================================================*/
 
-#include "catch.hpp"
-#include "golCatchMain.h"
+#include "golSerialGame.h"
 #include <iostream>
-#include <vector>
 
-TEST_CASE( "My first test", "[some group identifier]" ) {
-  int a = 5;
-  REQUIRE( a < 6 );
-}
+namespace gol {
 
-TEST_CASE( "My second test", "[some group identifier]" ) {
-  std::vector<int> a;
-  REQUIRE( a.size() == 0 );
-}
-
+} // end namespace

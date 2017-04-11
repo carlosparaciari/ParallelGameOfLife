@@ -16,8 +16,8 @@ set(DATA_DIR ${CMAKE_SOURCE_DIR}/Testing/Data)
 set(TMP_DIR ${CMAKE_BINARY_DIR}/Testing/Temporary)
 
 set(TEST_CASES
-  golBasicTest
-  golCommandLineArgsTest
+  golSerialGameTest
+  golInOutFramesTest
 )
 
 foreach(_test_case ${TEST_CASES})
@@ -32,5 +32,5 @@ endforeach()
 # Dont forget its:  add_test(<test name (globally unique) > <exe name> <argument1> <argument2>
 ##################################################################################################
 
-add_test(NoArgs ${EXECUTABLE_OUTPUT_PATH}/golBasicTest)
-add_test(1File ${EXECUTABLE_OUTPUT_PATH}/golCommandLineArgsTest ${DATA_DIR}/input.txt)
+add_test(Serial ${EXECUTABLE_OUTPUT_PATH}/golSerialGameTest)
+add_test(InOut ${EXECUTABLE_OUTPUT_PATH}/golInOutFramesTest ${DATA_DIR}/seed.life ${DATA_DIR}/config.dat)

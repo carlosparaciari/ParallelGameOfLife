@@ -12,15 +12,18 @@
 
 =============================================================================*/
 
-#include "golMyFunctions.h"
+#include "catch.hpp"
+#include "golCatchMain.h"
+#include "golInOutFrames.h"
 #include <iostream>
 
-namespace gol {
+TEST_CASE( "Test something about the input/output class", "[in_out_frame]" ) {
 
-//-----------------------------------------------------------------------------
-double MyFirstFunction(int a)
-{
-  return 0;
+  int expectedNumberOfArgs = 3;
+  if (gol::argc != expectedNumberOfArgs)
+  {
+    std::cerr << "Usage: golInOutFramesTest seed.life config.dat" << std::endl;
+    REQUIRE( gol::argc == expectedNumberOfArgs);
+  }
+  REQUIRE(true);
 }
-
-} // end namespace
