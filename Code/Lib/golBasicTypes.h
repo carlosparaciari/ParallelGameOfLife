@@ -16,6 +16,7 @@
 #define golBasicTypes_h
 
 #include "golWin32ExportHeader.h"
+#include <vector>
 
 /**
 * \defgroup internal internal
@@ -46,6 +47,22 @@
 //! Single namespace for all code in this package
 namespace gol
 {
+
+	/// Structure for the main parameters of the game.
+  struct game_parameters {
+  	int number_x_cells; /**< The total number of cells in the x direction. */
+  	int number_y_cells; /**< The total number of cells in the y direction. */
+  	int time_steps; /**< The total number of steps we want to evolve the system. */
+	};
+
+  /// Enum type with the two possible states of a cell.
+	enum class cell {
+    dead,
+    alive
+  };
+
+  /// Type frame, is a matrix of cells.
+  typedef std::vector<std::vector<cell>> frame;
 
 } // end namespace
 

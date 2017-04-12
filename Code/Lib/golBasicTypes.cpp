@@ -16,4 +16,5 @@
 
 namespace gol {
 
+
 } // end namespace
