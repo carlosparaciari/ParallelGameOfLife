@@ -24,7 +24,7 @@
 TEST_CASE( "Test the files with configuration parameters and seed", "[input_files]" ) {
 
   SECTION( "Test if the number of input files is correct" ) {
-    int expected_number_of_file_passed = 5;
+    int expected_number_of_file_passed = 7;
     REQUIRE( gol::argc == expected_number_of_file_passed );
   }
 
@@ -48,13 +48,23 @@ TEST_CASE( "Test the method which load the configuration parameters", "[load_con
   expected_parameters.number_y_cells = 7;
   expected_parameters.time_steps = 10;
 
-  SECTION( "Load the wrong configuration file." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[2]), std::string(gol::argv[3]) );
+  SECTION( "Load the wrong configuration file (one field more that expected)." ) {
+    gol::InOutFrames correct_load_config( std::string(gol::argv[2]), std::string(gol::argv[5]) );
+    REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
+  }
+
+  SECTION( "Load the wrong configuration file (one field less that expected)." ) {
+    gol::InOutFrames correct_load_config( std::string(gol::argv[3]), std::string(gol::argv[5]) );
+    REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
+  }
+
+  SECTION( "Load the wrong configuration file (one field was misspelled)." ) {
+    gol::InOutFrames correct_load_config( std::string(gol::argv[4]), std::string(gol::argv[5]) );
     REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
   }
 
   SECTION( "Load the correct configuration file." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[1]), std::string(gol::argv[3]) );
+    gol::InOutFrames correct_load_config( std::string(gol::argv[1]), std::string(gol::argv[5]) );
     obtained_parameters = correct_load_config.load_configuration_parameters();
     REQUIRE( obtained_parameters.number_x_cells == expected_parameters.number_x_cells );
     REQUIRE( obtained_parameters.number_y_cells == expected_parameters.number_y_cells );

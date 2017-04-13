@@ -33,7 +33,9 @@ endforeach()
 ##################################################################################################
 
 add_test(InOut ${EXECUTABLE_OUTPUT_PATH}/golInOutFramesTest ${DATA_DIR}/correct_config.dat
-															${DATA_DIR}/wrong_config.dat
+															${DATA_DIR}/wrong_config_extra_element.dat
+															${DATA_DIR}/wrong_config_missing_element.dat
+															${DATA_DIR}/wrong_config_misspell.dat
 															${DATA_DIR}/correct_seed.life
 															${DATA_DIR}/wrong_seed.life)
 add_test(Serial ${EXECUTABLE_OUTPUT_PATH}/golSerialGameTest)

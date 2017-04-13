@@ -1,0 +1,5 @@
+number_of_x_cells 5
+number_of 7
+time_steps 10
+output_filename example_frame
+extension life
