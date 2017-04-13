@@ -13,7 +13,6 @@
 =============================================================================*/
 
 #include "golInOutFrames.h"
-#include <iostream>
 
 namespace gol {
 
