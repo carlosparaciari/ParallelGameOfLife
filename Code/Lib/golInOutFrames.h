@@ -18,6 +18,10 @@
 #include "golWin32ExportHeader.h"
 #include "golBasicTypes.h"
 #include <string>
+#include <fstream>
+#include <exception>
+#include <array>
+#include <algorithm>
 
 /**
 * \file golInOutFrames.h

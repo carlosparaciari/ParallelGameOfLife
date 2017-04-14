@@ -48,23 +48,36 @@ TEST_CASE( "Test the method which load the configuration parameters", "[load_con
   expected_parameters.number_y_cells = 7;
   expected_parameters.time_steps = 10;
 
-  SECTION( "Load the wrong configuration file (one field more that expected)." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[2]), std::string(gol::argv[5]) );
+  std::string seed_filename = gol::argv[5];
+  std::string config_filename;
+
+  SECTION( "Load the wrong configuration file - it does not exists." ) {
+    config_filename = std::string("non_existing_file.dat");
+    gol::InOutFrames correct_load_config( seed_filename, config_filename );
     REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
   }
 
-  SECTION( "Load the wrong configuration file (one field less that expected)." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[3]), std::string(gol::argv[5]) );
+  SECTION( "Load the wrong configuration file - one parameter more that expected." ) {
+    config_filename = gol::argv[2];
+    gol::InOutFrames correct_load_config( seed_filename, config_filename );
     REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
   }
 
-  SECTION( "Load the wrong configuration file (one field was misspelled)." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[4]), std::string(gol::argv[5]) );
+  SECTION( "Load the wrong configuration file - less parameters that expected." ) {
+    config_filename = gol::argv[3];
+    gol::InOutFrames correct_load_config( seed_filename, config_filename );
+    REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
+  }
+
+  SECTION( "Load the wrong configuration file - one parameter was misspelled." ) {
+    config_filename = gol::argv[4];
+    gol::InOutFrames correct_load_config( seed_filename, config_filename );
     REQUIRE_THROWS( obtained_parameters = correct_load_config.load_configuration_parameters() );
   }
 
   SECTION( "Load the correct configuration file." ) {
-    gol::InOutFrames correct_load_config( std::string(gol::argv[1]), std::string(gol::argv[5]) );
+    config_filename = gol::argv[1];
+    gol::InOutFrames correct_load_config( seed_filename, config_filename );
     obtained_parameters = correct_load_config.load_configuration_parameters();
     REQUIRE( obtained_parameters.number_x_cells == expected_parameters.number_x_cells );
     REQUIRE( obtained_parameters.number_y_cells == expected_parameters.number_y_cells );
