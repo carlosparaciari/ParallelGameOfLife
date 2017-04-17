@@ -126,4 +126,75 @@ TEST_CASE( "Test the method which load the seed file", "[load_seed]" ) {
     REQUIRE(obtained_input_seed == expected_input_seed);
   }
 
+  SECTION( "The frame which receives the seed is empty." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    gol::frame input_seed;
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(input_seed) );
+  }
+
+  SECTION( "The frame which receives the seed has a wrong size - small along y." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    gol::frame input_seed(5, std::vector<gol::cell>(4, gol::dead));
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(input_seed) );
+  }
+
+  SECTION( "The frame which receives the seed has a wrong size - small along x." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    gol::frame input_seed(3, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(input_seed) );
+  }
+
+  SECTION( "The frame which receives the seed has a wrong size - big along y." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    gol::frame input_seed(5, std::vector<gol::cell>(6, gol::dead));
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(input_seed) );
+  }
+
+  SECTION( "The frame which receives the seed has a wrong size - big along x." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    gol::frame input_seed(7, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(input_seed) );
+  }
+}
+
+TEST_CASE( "Test the method which save the frame in a file", "[save_frame]" ) {
+
+  std::string seed_filename = gol::argv[5];
+  std::string config_filename = gol::argv[1];
+
+  SECTION( "The frame is empty." ) {
+    gol::InOutFrames save_frame_example( seed_filename, config_filename );
+    gol::frame current_frame;
+    REQUIRE_THROWS( save_frame_example.save_frame_to_file(current_frame, 0) );
+  }
+
+  SECTION( "The frame size is wrong - small along y." ) {
+    gol::InOutFrames save_frame_example( seed_filename, config_filename );
+    gol::frame current_frame(5, std::vector<gol::cell>(4, gol::dead));
+    REQUIRE_THROWS( save_frame_example.save_frame_to_file(current_frame, 0) );
+  }
+
+  SECTION( "The frame size is wrong - small along x." ) {
+    gol::InOutFrames save_frame_example( seed_filename, config_filename );
+    gol::frame current_frame(3, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( save_frame_example.save_frame_to_file(current_frame, 0) );
+  }
+
+  SECTION( "The frame size is wrong - big along y." ) {
+    gol::InOutFrames save_frame_example( seed_filename, config_filename );
+    gol::frame current_frame(5, std::vector<gol::cell>(6, gol::dead));
+    REQUIRE_THROWS( save_frame_example.save_frame_to_file(current_frame, 0) );
+  }
+
+  SECTION( "The frame size is wrong - big along x." ) {
+    gol::InOutFrames save_frame_example( seed_filename, config_filename );
+    gol::frame current_frame(7, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( save_frame_example.save_frame_to_file(current_frame, 0) );
+  }
+
 }
