@@ -16,6 +16,8 @@
 #define golSerialGame_h
 
 #include "golWin32ExportHeader.h"
+#include "golBasicTypes.h"
+#include "golGameOfLife.h"
 
 /**
 * \file golSerialGame.h
@@ -25,6 +27,35 @@
 namespace gol
 {
 
+/**
+* \brief The class SerialGame implements the game with no parallelisation.
+*/
+GAMEOFLIFE_WINEXPORT class SerialGame : public GameOfLife {
+
+  public:
+
+  	/// The class constructor.
+  	/**
+    * \param game_settings specifies the size of the grid in which the game is played.
+    */
+  	SerialGame(game_parameters game_settings);
+
+		/// Method to evolve a frame by one time step.
+		void evolve(frame & current_frame);
+
+	protected:
+
+    /// Method to count the alive cells in the neighbourhood of a given cell.
+		int count_alive_neighbours(int x_coord, int y_coord);
+
+		/// Method to change the state of a cell depending on the number of closeby alive cells.
+	  cell change_state_cell(int alive_neighbours);
+
+	private:
+
+		game_parameters m_game_settings; /**< The main settings for the game: number of x and y cells, and number of time steps. */
+
+};
 
 } // end namespace
 

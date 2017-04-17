@@ -13,8 +13,19 @@
 =============================================================================*/
 
 #include "golSerialGame.h"
-#include <iostream>
 
 namespace gol {
+
+	/// The class constructor.
+ 	SerialGame::SerialGame(game_parameters game_settings) {}
+
+	/// Method to evolve a frame by one time step.
+	void SerialGame::evolve(frame & current_frame) {}
+
+  /// Method to count the alive cells in the neighbourhood of a given cell.
+	int SerialGame::count_alive_neighbours(int x_coord, int y_coord) {}
+
+	/// Method to change the state of a cell depending on the number of closeby alive cells.
+  cell SerialGame::change_state_cell(int alive_neighbours) {}
 
 } // end namespace
