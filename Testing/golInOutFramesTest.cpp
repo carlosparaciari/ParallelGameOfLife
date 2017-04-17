@@ -24,7 +24,7 @@
 TEST_CASE( "Test the files with configuration parameters and seed", "[input_files]" ) {
 
   SECTION( "Test if the number of input files is correct" ) {
-    int expected_number_of_file_passed = 7;
+    int expected_number_of_file_passed = 8;
     REQUIRE( gol::argc == expected_number_of_file_passed );
   }
 
@@ -91,17 +91,23 @@ TEST_CASE( "Test the method which load the seed file", "[load_seed]" ) {
   std::string seed_filename;
   std::string config_filename = gol::argv[1];
 
-  gol::frame obtained_input_seed;
-  gol::frame expected_input_seed(5, std::vector<gol::cell>(7, gol::dead));
+  gol::frame obtained_input_seed(5, std::vector<gol::cell>(5, gol::dead));
+  gol::frame expected_input_seed(5, std::vector<gol::cell>(5, gol::dead));
 
-  expected_input_seed[1][2] = gol::alive;
-  expected_input_seed[2][2] = gol::alive;
-  expected_input_seed[2][4] = gol::alive;
+  expected_input_seed[1][3] = gol::alive;
+  expected_input_seed[2][1] = gol::alive;
+  expected_input_seed[2][3] = gol::alive;
   expected_input_seed[3][2] = gol::alive;
   expected_input_seed[3][3] = gol::alive;
 
   SECTION( "Load the wrong seed file - it does not exists." ) {
     seed_filename = std::string("non_existing_file.life");
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(obtained_input_seed) );
+  }
+
+  SECTION( "Load the seed file - wrong format." ) {
+    seed_filename = gol::argv[7];
     gol::InOutFrames correct_load_seed( seed_filename, config_filename );
     REQUIRE_THROWS( correct_load_seed.load_seed_frame(obtained_input_seed) );
   }

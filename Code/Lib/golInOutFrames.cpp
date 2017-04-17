@@ -117,7 +117,45 @@ namespace gol {
 	}
 
 	/// Method to load the seed pattern into the initial frame.
-  void InOutFrames::load_seed_frame(frame & initial_frame) {}
+  void InOutFrames::load_seed_frame(frame & initial_frame) {
+
+  	std::fstream filein;
+		filein.open( m_seed_file_name );
+
+    if ( !filein.is_open() ) {
+      std::string message = std::string("The seed file cannot be opened.");
+      throw std::runtime_error(message);
+    }
+
+    std::string header;
+    std::getline(filein, header);
+
+    if ( header != std::string("#Life 1.06") ) {
+      std::string message = std::string("The format of the seed file is wrong (use Life 1.06 format).");
+      throw std::runtime_error(message);
+    }
+
+    int x_coordinate;
+    int y_coordinate;
+    int actual_x_coordinate;
+    int actual_y_coordinate;
+    int x_center = m_game_settings.number_x_cells / 2;
+    int y_center = m_game_settings.number_y_cells / 2;
+
+    while ( !filein.eof() ) {
+    	filein >> x_coordinate >> y_coordinate;
+    	actual_x_coordinate = x_center + x_coordinate;
+    	actual_y_coordinate = y_center + y_coordinate;
+
+    	bool x_condition = (actual_x_coordinate >= 0) &&
+    										 (actual_x_coordinate < m_game_settings.number_x_cells);
+    	bool y_condition = (actual_y_coordinate >= 0) &&
+    										 (actual_y_coordinate < m_game_settings.number_y_cells);
+
+    	if ( x_condition && y_condition )
+    		initial_frame[actual_x_coordinate][actual_y_coordinate] = alive;
+    }
+  }
 
   /// Method to save the current frame into an output file.
 	void InOutFrames::save_frame_to_file(frame & current_frame, int iteration) {}

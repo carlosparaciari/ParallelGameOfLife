@@ -17,6 +17,7 @@
 
 #include "golWin32ExportHeader.h"
 #include "golBasicTypes.h"
+#include <cmath>
 #include <string>
 #include <fstream>
 #include <exception>
