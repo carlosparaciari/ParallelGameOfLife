@@ -17,7 +17,9 @@
 namespace gol {
 
 	/// The class constructor.
- 	SerialGame::SerialGame(game_parameters game_settings) {}
+ 	SerialGame::SerialGame(game_parameters game_settings) {
+ 		m_game_settings = game_settings;
+ 	}
 
 	/// Method to evolve a frame by one time step.
 	void SerialGame::evolve(frame & current_frame) {}
@@ -26,6 +28,24 @@ namespace gol {
 	int SerialGame::count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) {}
 
 	/// Method to change the state of a cell depending on the number of closeby alive cells.
-  cell SerialGame::change_state_cell(int alive_neighbours, cell current_state) {}
+  cell SerialGame::change_state_cell(int alive_neighbours, cell current_state) {
+
+  	if ( current_state == alive) {
+  		if ( alive_neighbours < 2 )
+  			return dead;
+  		if ( (alive_neighbours == 2) || (alive_neighbours == 3) )
+  			return alive;
+  		if ( alive_neighbours > 3 )
+  			return dead;
+  	}
+
+  	if ( current_state == dead) {
+  		if ( alive_neighbours == 3 )
+  			return alive;
+  		else
+  			return dead;
+  	}
+
+  }
 
 } // end namespace
