@@ -52,18 +52,22 @@ GAMEOFLIFE_WINEXPORT class GameOfLife {
     /**
     * \param x_coord is the coordinate along the x axes of the cell whose neighbours we are interested in.
     * \param y_coord is the coordinate along the y axes of the cell whose neighbours we are interested in.
+    * \param current_frame is the frame where the neighbours are searched.
+    *
     * \return the number of alive cells around the specified one.
     */
-		virtual int count_alive_neighbours(int x_coord, int y_coord) = 0;
+		virtual int count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) = 0;
 
 		/// Method to change the state of a cell depending on the number of closeby alive cells.
     /**
     * \param alive_neighbours number of alive neighbours
+    * \par current_state is the state of the cell at the moment.
+    *
     * \return the state of the cell (either alive of dead).
     *
     * In order to modify the state of the cell, the rules of the game are used.
     */
-		virtual cell change_state_cell(int alive_neighbours) = 0;
+		virtual cell change_state_cell(int alive_neighbours, cell current_state) = 0;
 
 };
 

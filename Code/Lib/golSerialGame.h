@@ -46,10 +46,10 @@ GAMEOFLIFE_WINEXPORT class SerialGame : public GameOfLife {
 	protected:
 
     /// Method to count the alive cells in the neighbourhood of a given cell.
-		int count_alive_neighbours(int x_coord, int y_coord);
+		int count_alive_neighbours(int x_coord, int y_coord, frame & current_frame);
 
 		/// Method to change the state of a cell depending on the number of closeby alive cells.
-	  cell change_state_cell(int alive_neighbours);
+	  cell change_state_cell(int alive_neighbours, cell current_state);
 
 	private:
 
