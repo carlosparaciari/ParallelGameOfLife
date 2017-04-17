@@ -22,6 +22,13 @@ namespace gol {
   	m_seed_file_name = seed_file_name;
   	m_config_file_name = config_file_name;
 
+  	m_game_settings.number_x_cells = 5;
+  	m_game_settings.number_y_cells = 5;
+  	m_game_settings.time_steps = 1;
+
+  	m_frame_file_name = "game_frames";
+  	m_extension = "life";
+
   }
 
   /// Method to load the parameters from the configuration file.
@@ -38,6 +45,7 @@ namespace gol {
     std::string definition;
     std::string value;
 
+    // This array is used to check that all fields are filled with the configuration parameters.
     std::array<int,5> fill_check;
     std::fill( fill_check.begin(), fill_check.end(), 0 );
 
@@ -89,7 +97,24 @@ namespace gol {
 	}
 
 	/// Method to save the parameters into a configuration file for the video script.
-	void InOutFrames::save_configuration_to_file() {}
+	void InOutFrames::save_configuration_to_file() {
+
+		std::fstream fileout;
+	  fileout.open( "config.yaml", std::ofstream::out );
+
+	  if ( !fileout.is_open() ) {
+      std::string message = std::string("The configuration output file cannot be open.");
+      throw std::runtime_error(message);
+    }
+    
+    fileout << "number_x_cells : " << m_game_settings.number_x_cells << std::endl;
+    fileout << "number_y_cells : " << m_game_settings.number_y_cells << std::endl;
+    fileout << "time_steps : " << m_game_settings.time_steps << std::endl;
+    fileout << "file_name : " << m_frame_file_name << std::endl;
+    fileout << "extension : " << m_extension << std::endl;
+
+  	fileout.close();
+	}
 
 	/// Method to load the seed pattern into the initial frame.
   void InOutFrames::load_seed_frame(frame & initial_frame) {}
