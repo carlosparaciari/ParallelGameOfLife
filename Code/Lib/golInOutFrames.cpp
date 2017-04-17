@@ -119,6 +119,19 @@ namespace gol {
 	/// Method to load the seed pattern into the initial frame.
   void InOutFrames::load_seed_frame(frame & initial_frame) {
 
+  	if ( initial_frame.empty() ) {
+			std::string message = std::string("The frame is empty.");
+      throw std::runtime_error(message);
+		}
+
+		bool notsame_x_size = initial_frame.size() != m_game_settings.number_x_cells;
+		bool notsame_y_size = initial_frame[0].size() != m_game_settings.number_y_cells;
+
+		if ( notsame_x_size || notsame_y_size ) {
+			std::string message = std::string("The frame size is not correct.");
+      throw std::runtime_error(message);
+		}
+
   	std::fstream filein;
 		filein.open( m_seed_file_name );
 
@@ -158,6 +171,46 @@ namespace gol {
   }
 
   /// Method to save the current frame into an output file.
-	void InOutFrames::save_frame_to_file(frame & current_frame, int iteration) {}
+	void InOutFrames::save_frame_to_file(frame & current_frame, int iteration) {
+
+		if ( current_frame.empty() ) {
+			std::string message = std::string("The frame is empty.");
+      throw std::runtime_error(message);
+		}
+
+		bool notsame_x_size = current_frame.size() != m_game_settings.number_x_cells;
+		bool notsame_y_size = current_frame[0].size() != m_game_settings.number_y_cells;
+
+		if ( notsame_x_size || notsame_y_size ) {
+			std::string message = std::string("The frame size is not correct.");
+      throw std::runtime_error(message);
+		}
+
+		/* This part would not be necessary as in C++11 one can use the to_string function.
+		*  However, the g++ compiler provided by MinGW-32 has a known bug related to this function.
+		*  Therefore, we prefer to utilse the following approach.
+		*/
+		std::ostringstream converter;
+    converter << iteration;
+
+		std::fstream fileout;
+		std::string output_file = m_frame_file_name + std::string("_") + converter.str() + std::string(".") + m_extension;
+	  fileout.open( output_file, std::ofstream::out );
+
+	  if ( !fileout.is_open() ) {
+      std::string message = std::string("The frame output file cannot be open.");
+      throw std::runtime_error(message);
+    }
+
+    fileout << "#Life 1.06" << std::endl;
+
+    int x_center = m_game_settings.number_x_cells / 2;
+    int y_center = m_game_settings.number_y_cells / 2;
+
+    for (int x_cell = 0 ; x_cell < m_game_settings.number_x_cells ; ++x_cell)
+    	for (int y_cell = 0 ; y_cell < m_game_settings.number_y_cells ; ++y_cell)
+    		if ( current_frame[x_cell][y_cell] == alive )
+    			fileout << x_cell - x_center << " " << y_cell - y_center << std::endl;
+	}
 
 } // end namespace

@@ -19,6 +19,7 @@
 #include "golBasicTypes.h"
 #include <cmath>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <exception>
 #include <array>
