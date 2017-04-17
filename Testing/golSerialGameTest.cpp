@@ -169,4 +169,17 @@ TEST_CASE( "The method to evolve the system by one time step.", "[evolve_state]"
 	  REQUIRE( current_frame == expected_next );
 	}
 
+	evolve_state_example.evolve(current_frame);
+	evolve_state_example.evolve(current_frame);
+	evolve_state_example.evolve(current_frame);
+	evolve_state_example.evolve(current_frame);
+
+	SECTION( "The frame evolves few time steps - close to boundary." ) {
+	  gol::frame expected_next(5, std::vector<gol::cell>(5, gol::dead));
+	  expected_next[4][3] = gol::alive;
+  	expected_next[3][4] = gol::alive;
+  	expected_next[4][4] = gol::alive;
+	  REQUIRE( current_frame == expected_next );
+	}
+
 }

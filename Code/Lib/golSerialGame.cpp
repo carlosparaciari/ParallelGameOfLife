@@ -22,10 +22,7 @@ namespace gol {
  	}
 
 	/// Method to evolve a frame by one time step.
-	void SerialGame::evolve(frame & current_frame) {}
-
-  /// Method to count the alive cells in the neighbourhood of a given cell.
-	int SerialGame::count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) {
+	void SerialGame::evolve(frame & current_frame) {
 
 		if ( current_frame.empty() ) {
 			std::string message = std::string("The frame is empty.");
@@ -40,13 +37,22 @@ namespace gol {
       throw std::runtime_error(message);
 		}
 
-		bool x_out_of_range = ( x_coord < 0 ) || ( x_coord >= m_game_settings.number_x_cells );
-		bool y_out_of_range = ( y_coord < 0 ) || ( y_coord >= m_game_settings.number_y_cells );
+		frame next_frame(m_game_settings.number_x_cells, std::vector<gol::cell>(m_game_settings.number_y_cells, gol::dead));
+		int number_alive_cells;
 
-		if (x_out_of_range || y_out_of_range) {
-			std::string message = std::string("The coordinate is out of range.");
-      throw std::runtime_error(message);
+		for ( int i = 0 ; i < m_game_settings.number_x_cells ; ++i ) {
+			for ( int j = 0 ; j < m_game_settings.number_y_cells ; ++j ) {
+				number_alive_cells = count_alive_neighbours(i, j, current_frame);
+				next_frame[i][j] = change_state_cell(number_alive_cells, current_frame[i][j]);
+			}
 		}
+
+		current_frame = next_frame;
+
+	}
+
+  /// Method to count the alive cells in the neighbourhood of a given cell.
+	int SerialGame::count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) {
 
     int number_alive_cells = 0;
 
