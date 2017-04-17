@@ -85,3 +85,39 @@ TEST_CASE( "Test the method which load the configuration parameters", "[load_con
   }
 
 }
+
+TEST_CASE( "Test the method which load the seed file", "[load_seed]" ) {
+
+  std::string seed_filename;
+  std::string config_filename = gol::argv[1];
+
+  gol::frame obtained_input_seed;
+  gol::frame expected_input_seed(5, std::vector<gol::cell>(7, gol::dead));
+
+  expected_input_seed[1][2] = gol::alive;
+  expected_input_seed[2][2] = gol::alive;
+  expected_input_seed[2][4] = gol::alive;
+  expected_input_seed[3][2] = gol::alive;
+  expected_input_seed[3][3] = gol::alive;
+
+  SECTION( "Load the wrong seed file - it does not exists." ) {
+    seed_filename = std::string("non_existing_file.life");
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    REQUIRE_THROWS( correct_load_seed.load_seed_frame(obtained_input_seed) );
+  }
+
+  SECTION( "Load the seed file - bigger than expected." ) {
+    seed_filename = gol::argv[6];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    correct_load_seed.load_seed_frame(obtained_input_seed);
+    REQUIRE(obtained_input_seed == expected_input_seed);
+  }
+
+  SECTION( "Load the seed file, correct size." ) {
+    seed_filename = gol::argv[5];
+    gol::InOutFrames correct_load_seed( seed_filename, config_filename );
+    correct_load_seed.load_seed_frame(obtained_input_seed);
+    REQUIRE(obtained_input_seed == expected_input_seed);
+  }
+
+}

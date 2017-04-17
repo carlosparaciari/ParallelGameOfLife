@@ -56,7 +56,7 @@ namespace gol
 	};
 
   /// Enum type with the two possible states of a cell.
-	enum class cell {
+	enum cell {
     dead,
     alive
   };
