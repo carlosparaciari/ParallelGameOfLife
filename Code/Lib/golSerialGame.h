@@ -18,6 +18,8 @@
 #include "golWin32ExportHeader.h"
 #include "golBasicTypes.h"
 #include "golGameOfLife.h"
+#include <string>
+#include <stdexcept>
 
 /**
 * \file golSerialGame.h

@@ -83,31 +83,56 @@ TEST_CASE( "Test for the method which count the number of alive nearest-neighbou
 	game_settings.number_y_cells = 3;
   TestProtectedSerialGame alive_nearest_example(game_settings);
 
+  int obtained_number;
+
+  SECTION( "The frame is empty." ) {
+    gol::frame current_frame;
+    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - small along y." ) {
+    gol::frame current_frame(3, std::vector<gol::cell>(2, gol::dead));
+    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - small along x." ) {
+    gol::frame current_frame(1, std::vector<gol::cell>(3, gol::dead));
+    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - big along y." ) {
+    gol::frame current_frame(3, std::vector<gol::cell>(4, gol::dead));
+    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - big along x." ) {
+    gol::frame current_frame(5, std::vector<gol::cell>(3, gol::dead));
+    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
+  }
+
   gol::frame current_frame(3, std::vector<gol::cell>(3, gol::dead));
   current_frame[0][1] = gol::alive;
   current_frame[2][2] = gol::alive;
 
-  int obtained_number;
-
-	SECTION( "Out of boundaries") {
+	SECTION( "Out of boundaries.") {
 	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(-1, 0, current_frame) );
 	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(5, 2, current_frame) );
 	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(1, -2, current_frame) );
 	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 4, current_frame) );
   }
 
-  SECTION( "Boundaries") {
+  SECTION( "Boundaries.") {
 	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) == 1 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 1, current_frame) == 1 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 2, current_frame) == 0 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 0, current_frame) == 1 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 1, current_frame) == 2 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 1, current_frame) == 0 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 2, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 0, current_frame) == 0 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 1, current_frame) == 1 );
 	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 2, current_frame) == 0 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 0, current_frame) == 0 );
-	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 2, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 0, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 2, current_frame) == 2 );
   }
 
-  SECTION( "Internal") {
+  SECTION( "Internal.") {
 	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 1, current_frame) == 2 );
   }
 

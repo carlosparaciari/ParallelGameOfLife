@@ -21,7 +21,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <exception>
+#include <stdexcept>
 #include <array>
 #include <algorithm>
 
