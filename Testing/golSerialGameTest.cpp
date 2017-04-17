@@ -75,3 +75,40 @@ TEST_CASE( "The method to change state of a cell is tested for different numbers
   }
 
 }
+
+TEST_CASE( "Test for the method which count the number of alive nearest-neighbour cells", "[alive_nearest]" ) {
+
+	gol::game_parameters game_settings;
+	game_settings.number_x_cells = 3;
+	game_settings.number_y_cells = 3;
+  TestProtectedSerialGame alive_nearest_example(game_settings);
+
+  gol::frame current_frame(3, std::vector<gol::cell>(3, gol::dead));
+  current_frame[0][1] = gol::alive;
+  current_frame[2][2] = gol::alive;
+
+  int obtained_number;
+
+	SECTION( "Out of boundaries") {
+	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(-1, 0, current_frame) );
+	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(5, 2, current_frame) );
+	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(1, -2, current_frame) );
+	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 4, current_frame) );
+  }
+
+  SECTION( "Boundaries") {
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 1, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 2, current_frame) == 0 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 0, current_frame) == 1 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 1, current_frame) == 2 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(2, 2, current_frame) == 0 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 0, current_frame) == 0 );
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 2, current_frame) == 1 );
+  }
+
+  SECTION( "Internal") {
+	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 1, current_frame) == 2 );
+  }
+
+}
