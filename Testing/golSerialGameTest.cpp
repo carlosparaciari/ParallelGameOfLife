@@ -36,7 +36,7 @@ GAMEOFLIFE_WINEXPORT class TestProtectedSerialGame : public gol::SerialGame {
 
 };
 
-TEST_CASE( "The method to change state of a cell is tested for different numbers of near alive cells", "[change_state]" ) {
+TEST_CASE( "The method to change state of a cell is tested for different numbers of near alive cells.", "[change_state]" ) {
 
 	gol::game_parameters game_settings;
   TestProtectedSerialGame change_state_example(game_settings);
@@ -76,7 +76,7 @@ TEST_CASE( "The method to change state of a cell is tested for different numbers
 
 }
 
-TEST_CASE( "Test for the method which count the number of alive nearest-neighbour cells", "[alive_nearest]" ) {
+TEST_CASE( "Test for the method which count the number of alive nearest-neighbour cells.", "[alive_nearest]" ) {
 
 	gol::game_parameters game_settings;
 	game_settings.number_x_cells = 3;
@@ -85,41 +85,9 @@ TEST_CASE( "Test for the method which count the number of alive nearest-neighbou
 
   int obtained_number;
 
-  SECTION( "The frame is empty." ) {
-    gol::frame current_frame;
-    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
-  }
-
-  SECTION( "The frame size is wrong - small along y." ) {
-    gol::frame current_frame(3, std::vector<gol::cell>(2, gol::dead));
-    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
-  }
-
-  SECTION( "The frame size is wrong - small along x." ) {
-    gol::frame current_frame(1, std::vector<gol::cell>(3, gol::dead));
-    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
-  }
-
-  SECTION( "The frame size is wrong - big along y." ) {
-    gol::frame current_frame(3, std::vector<gol::cell>(4, gol::dead));
-    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
-  }
-
-  SECTION( "The frame size is wrong - big along x." ) {
-    gol::frame current_frame(5, std::vector<gol::cell>(3, gol::dead));
-    REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) );
-  }
-
   gol::frame current_frame(3, std::vector<gol::cell>(3, gol::dead));
   current_frame[0][1] = gol::alive;
   current_frame[2][2] = gol::alive;
-
-	SECTION( "Out of boundaries.") {
-	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(-1, 0, current_frame) );
-	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(5, 2, current_frame) );
-	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(1, -2, current_frame) );
-	  REQUIRE_THROWS( obtained_number = alive_nearest_example.test_count_alive_neighbours(0, 4, current_frame) );
-  }
 
   SECTION( "Boundaries.") {
 	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(0, 0, current_frame) == 1 );
@@ -135,5 +103,70 @@ TEST_CASE( "Test for the method which count the number of alive nearest-neighbou
   SECTION( "Internal.") {
 	  REQUIRE( alive_nearest_example.test_count_alive_neighbours(1, 1, current_frame) == 2 );
   }
+
+}
+
+TEST_CASE( "The method to evolve the system by one time step.", "[evolve_state]" ) {
+
+	gol::game_parameters game_settings;
+	game_settings.number_x_cells = 5;
+	game_settings.number_y_cells = 5;
+  gol::SerialGame evolve_state_example(game_settings);
+
+  SECTION( "The frame is empty." ) {
+    gol::frame current_frame;
+    REQUIRE_THROWS( evolve_state_example.evolve(current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - small along y." ) {
+    gol::frame current_frame(5, std::vector<gol::cell>(2, gol::dead));
+    REQUIRE_THROWS( evolve_state_example.evolve(current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - small along x." ) {
+    gol::frame current_frame(4, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( evolve_state_example.evolve(current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - big along y." ) {
+    gol::frame current_frame(5, std::vector<gol::cell>(7, gol::dead));
+    REQUIRE_THROWS( evolve_state_example.evolve(current_frame) );
+  }
+
+  SECTION( "The frame size is wrong - big along x." ) {
+    gol::frame current_frame(6, std::vector<gol::cell>(5, gol::dead));
+    REQUIRE_THROWS( evolve_state_example.evolve(current_frame) );
+  }
+
+  gol::frame current_frame(5, std::vector<gol::cell>(5, gol::dead));
+  current_frame[2][1] = gol::alive;
+  current_frame[3][2] = gol::alive;
+  current_frame[1][3] = gol::alive;
+  current_frame[2][3] = gol::alive;
+  current_frame[3][3] = gol::alive;
+
+  evolve_state_example.evolve(current_frame);
+
+  SECTION( "The frame evolves one time step - first." ) {
+	  gol::frame expected_next(5, std::vector<gol::cell>(5, gol::dead));
+	  expected_next[1][2] = gol::alive;
+	  expected_next[3][2] = gol::alive;
+	  expected_next[2][3] = gol::alive;
+	  expected_next[3][3] = gol::alive;
+	  expected_next[2][4] = gol::alive;
+	  REQUIRE( current_frame == expected_next );
+	}
+
+	evolve_state_example.evolve(current_frame);
+
+	SECTION( "The frame evolves one time step - second." ) {
+	  gol::frame expected_next(5, std::vector<gol::cell>(5, gol::dead));
+	  expected_next[3][2] = gol::alive;
+  	expected_next[1][3] = gol::alive;
+  	expected_next[3][3] = gol::alive;
+  	expected_next[2][4] = gol::alive;
+  	expected_next[3][4] = gol::alive;
+	  REQUIRE( current_frame == expected_next );
+	}
 
 }
