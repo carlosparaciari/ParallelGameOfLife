@@ -13,7 +13,7 @@
 #============================================================================*/
 
 set(GAMEOFLIFE_USE_Boost 1)
-set(GAMEOFLIFE_USE_Boost_LIBRARIES "filesystem;system;date_time;regex")
+set(GAMEOFLIFE_USE_Boost_LIBRARIES "program_options")
 
 #-----------------------------------------------------------------------------
 # Boost

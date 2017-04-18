@@ -46,7 +46,7 @@ option(BUILD_gflags "Build gflags." OFF)
 option(BUILD_glog "Build glog." OFF)
 option(BUILD_OpenCV "Build OpenCV." OFF)
 option(BUILD_Eigen "Build Eigen." OFF)
-option(BUILD_Boost "Build Boost." OFF)
+option(BUILD_Boost "Build Boost." ON)
 option(BUILD_VTK "Build VTK." OFF)
 option(BUILD_GUI "Build GUI." OFF)
 option(GAMEOFLIFE_USE_QT "Use Qt, normally for GUI development, but can be for anything." OFF)
@@ -229,6 +229,16 @@ endif(BUILD_TESTING)
 
 
 ######################################################################
+# The Boost_VERSION flag sets the version of the Boost library that
+# will be used. By default it is set to 1.56, which is the version
+# downloaded if the BUILD_SUPERBUILD flag is on.
+#
+# Users with a different version of the Boost library NEED to modify it manually. 
+######################################################################
+set(Boost_VERSION 1.63)
+
+
+######################################################################
 # Now, if required, do the SuperBuild
 # If we are doing SuperBuild
 #   We configure up to this point (see the return() statement)
@@ -350,7 +360,7 @@ if(BUILD_Boost)
     set(Boost_USE_STATIC_LIBS ON)
     set(Boost_USE_STATIC_RUNTIME ON) 
   endif()
-  find_package(Boost 1.56 EXACT COMPONENTS filesystem system date_time regex REQUIRED)
+  find_package(Boost ${Boost_VERSION} EXACT COMPONENTS program_options REQUIRED)
   include_directories(${Boost_INCLUDE_DIRS})
   link_directories(${Boost_LIBRARY_DIRS})
   if(WIN32)
