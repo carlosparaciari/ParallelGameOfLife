@@ -168,6 +168,8 @@ namespace gol {
     	if ( x_condition && y_condition )
     		initial_frame[actual_x_coordinate][actual_y_coordinate] = alive;
     }
+
+    filein.close();
   }
 
   /// Method to save the current frame into an output file.
@@ -211,6 +213,8 @@ namespace gol {
     	for (int y_cell = 0 ; y_cell < m_game_settings.number_y_cells ; ++y_cell)
     		if ( current_frame[x_cell][y_cell] == alive )
     			fileout << x_cell - x_center << " " << y_cell - y_center << std::endl;
+
+    fileout.close();
 	}
 
 } // end namespace
