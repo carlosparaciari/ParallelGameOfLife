@@ -280,6 +280,17 @@ configure_file(${CMAKE_SOURCE_DIR}/CMake/Findgflags.cmake.in ${CMAKE_BINARY_DIR}
 
 
 ######################################################################
+# Create an example of the game, and a script to maka a video out of the example.
+######################################################################
+configure_file(${CMAKE_SOURCE_DIR}/VideoScript/MakeVideo.py ${CMAKE_BINARY_DIR}/VideoScript/MakeVideo.py)
+configure_file(${CMAKE_SOURCE_DIR}/VideoScript/config.dat ${CMAKE_BINARY_DIR}/VideoScript/config.dat)
+configure_file(${CMAKE_SOURCE_DIR}/VideoScript/gosper_glider_gun.life ${CMAKE_BINARY_DIR}/VideoScript/gosper_glider_gun.life)
+configure_file(${CMAKE_SOURCE_DIR}/VideoScript/README.txt ${CMAKE_BINARY_DIR}/VideoScript/README.txt)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/VideoScript/Data)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/VideoScript/Video)
+
+
+######################################################################
 # Provide support for manually running Doxygen in build folder.
 ######################################################################
 configure_file(${CMAKE_SOURCE_DIR}/Utilities/Doxygen/gameoflifedoxygen.pl.in ${CMAKE_BINARY_DIR}/gameoflifedoxygen.pl)

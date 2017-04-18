@@ -1,0 +1,5 @@
+number_of_x_cells 100
+number_of_y_cells 100
+time_steps 250
+output_filename glider_gun_evolution
+extension life
