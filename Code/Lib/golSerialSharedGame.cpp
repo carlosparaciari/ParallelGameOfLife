@@ -12,17 +12,17 @@
 
 =============================================================================*/
 
-#include "golSerialGame.h"
+#include "golSerialSharedGame.h"
 
 namespace gol {
 
 	/// The class constructor.
- 	SerialGame::SerialGame(game_parameters game_settings) {
+ 	SerialSharedGame::SerialSharedGame(game_parameters game_settings) {
  		m_game_settings = game_settings;
  	}
 
 	/// Method to evolve a frame by one time step.
-	void SerialGame::evolve(frame & current_frame) {
+	void SerialSharedGame::evolve(frame & current_frame) {
 
 		if ( current_frame.empty() ) {
 			std::string message = std::string("The frame is empty.");
@@ -52,7 +52,7 @@ namespace gol {
 	}
 
   /// Method to count the alive cells in the neighbourhood of a given cell.
-	int SerialGame::count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) {
+	int SerialSharedGame::count_alive_neighbours(int x_coord, int y_coord, frame & current_frame) {
 
     int number_alive_cells = 0;
 
@@ -81,7 +81,7 @@ namespace gol {
 	}
 
 	/// Method to change the state of a cell depending on the number of closeby alive cells.
-  cell SerialGame::change_state_cell(int alive_neighbours, cell current_state) {
+  cell SerialSharedGame::change_state_cell(int alive_neighbours, cell current_state) {
 
   	if ( current_state == alive) {
   		if ( alive_neighbours < 2 )

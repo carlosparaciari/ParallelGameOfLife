@@ -16,8 +16,7 @@ set(DATA_DIR ${CMAKE_SOURCE_DIR}/Testing/Data)
 set(TMP_DIR ${CMAKE_BINARY_DIR}/Testing/Temporary)
 
 set(TEST_CASES
-  golSerialGameTest
-  golSharedGameTest
+  golSerialSharedGameTest
   golInOutFramesTest
 )
 
@@ -40,5 +39,4 @@ add_test(InOut ${EXECUTABLE_OUTPUT_PATH}/golInOutFramesTest ${DATA_DIR}/correct_
 															${DATA_DIR}/correct_seed.life
 															${DATA_DIR}/wrong_seed.life
 															${DATA_DIR}/wrong_format_seed.rle)
-add_test(Serial ${EXECUTABLE_OUTPUT_PATH}/golSerialGameTest)
-add_test(Shared ${EXECUTABLE_OUTPUT_PATH}/golSharedGameTest)
+add_test(Serial ${EXECUTABLE_OUTPUT_PATH}/golSerialSharedGameTest)

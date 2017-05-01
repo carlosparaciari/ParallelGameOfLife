@@ -12,29 +12,31 @@
 
 =============================================================================*/
 
-#ifndef golSharedGame_h
-#define golSharedGame_h
+#ifndef golSerialSharedGame_h
+#define golSerialSharedGame_h
 
 #include "golWin32ExportHeader.h"
 #include "golBasicTypes.h"
 #include "golGameOfLife.h"
+#include <string>
+#include <stdexcept>
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
 
 /**
-* \file golSharedGame.h
-* \brief This class evolves the system with a shared memory parallelisation
+* \file golSerialSharedGame.h
+* \brief This class evolves the system with either a serial or shared (OpenMP) solution
 * \ingroup utilities
 */
 namespace gol
 {
 
 /**
-* \brief The class SharedGame implements the game with OpenMP.
+* \brief The class SerialSharedGame implements the game with either shared or no parallelisation. 
 */
-GAMEOFLIFE_WINEXPORT class SharedGame : public GameOfLife {
+GAMEOFLIFE_WINEXPORT class SerialSharedGame : public GameOfLife {
 
   public:
 
@@ -42,7 +44,7 @@ GAMEOFLIFE_WINEXPORT class SharedGame : public GameOfLife {
   	/**
     * \param game_settings specifies the size of the grid in which the game is played.
     */
-  	SharedGame(game_parameters game_settings);
+  	SerialSharedGame(game_parameters game_settings);
 
 		/// Method to evolve a frame by one time step.
 		void evolve(frame & current_frame);

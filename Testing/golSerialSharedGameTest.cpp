@@ -15,16 +15,16 @@
 #include "catch.hpp"
 #include "golCatchMain.h"
 #include "golBasicTypes.h"
-#include "golSerialGame.h"
+#include "golSerialSharedGame.h"
 #include <vector>
 
-// This class is used to test the protected methods of the SerialGame class.
-GAMEOFLIFE_WINEXPORT class TestProtectedSerialGame : public gol::SerialGame {
+// This class is used to test the protected methods of the SerialSharedGame class.
+GAMEOFLIFE_WINEXPORT class TestProtectedSerialSharedGame : public gol::SerialSharedGame {
 
   public:
 
-  	// The constructor of SerialGame is used for this test class
-  	using SerialGame::SerialGame;
+  	// The constructor of SerialSharedGame is used for this test class
+  	using SerialSharedGame::SerialSharedGame;
 
   	int test_count_alive_neighbours(int x_coord, int y_coord, gol::frame & current_frame) {
   		return count_alive_neighbours(x_coord, y_coord, current_frame);
@@ -39,7 +39,7 @@ GAMEOFLIFE_WINEXPORT class TestProtectedSerialGame : public gol::SerialGame {
 TEST_CASE( "The method to change state of a cell is tested for different numbers of near alive cells.", "[change_state]" ) {
 
 	gol::game_parameters game_settings;
-  TestProtectedSerialGame change_state_example(game_settings);
+  TestProtectedSerialSharedGame change_state_example(game_settings);
 
   SECTION( "Underpopulation") {
 	  REQUIRE( change_state_example.test_change_state_cell(0, gol::alive) == gol::dead );
@@ -81,7 +81,7 @@ TEST_CASE( "Test for the method which count the number of alive nearest-neighbou
 	gol::game_parameters game_settings;
 	game_settings.number_x_cells = 3;
 	game_settings.number_y_cells = 3;
-  TestProtectedSerialGame alive_nearest_example(game_settings);
+  TestProtectedSerialSharedGame alive_nearest_example(game_settings);
 
   int obtained_number;
 
@@ -111,7 +111,7 @@ TEST_CASE( "The method to evolve the system by one time step.", "[evolve_state]"
 	gol::game_parameters game_settings;
 	game_settings.number_x_cells = 5;
 	game_settings.number_y_cells = 5;
-  gol::SerialGame evolve_state_example(game_settings);
+  gol::SerialSharedGame evolve_state_example(game_settings);
 
   SECTION( "The frame is empty." ) {
     gol::frame current_frame;

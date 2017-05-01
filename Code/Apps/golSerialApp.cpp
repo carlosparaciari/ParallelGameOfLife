@@ -13,7 +13,7 @@
 =============================================================================*/
 
 #include "golInOutFrames.h"
-#include "golSerialGame.h"
+#include "golSerialSharedGame.h"
 #include "golBasicTypes.h"
 #include <boost/program_options.hpp>
 #include <iostream>
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     framer.load_seed_frame(game_frame);
     framer.save_frame_to_file(game_frame, 0);
 
-    gol::SerialGame evolver(game_settings);
+    gol::SerialSharedGame evolver(game_settings);
 
     for (int iteration = 0 ; iteration < game_settings.time_steps ; ++iteration ) {
     	evolver.evolve(game_frame);
