@@ -1,0 +1,5 @@
+number_of_x_cells 1716
+number_of_y_cells 1649
+time_steps 1
+output_filename turing_evolution
+extension life

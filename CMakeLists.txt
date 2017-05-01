@@ -292,6 +292,16 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/VideoScript/Video)
 
 
 ######################################################################
+# Create a script for measuring the scaling of the parallel versions of the golGameApp
+######################################################################
+configure_file(${CMAKE_SOURCE_DIR}/ScalingScript/scaling_game_omp.sh ${CMAKE_BINARY_DIR}/ScalingScript/scaling_game_omp.sh)
+configure_file(${CMAKE_SOURCE_DIR}/ScalingScript/README.txt ${CMAKE_BINARY_DIR}/ScalingScript/README.txt)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/ScalingScript/input/)
+configure_file(${CMAKE_SOURCE_DIR}/ScalingScript/input/config_turing.dat ${CMAKE_BINARY_DIR}/ScalingScript/input/config_turing.dat)
+configure_file(${CMAKE_SOURCE_DIR}/ScalingScript/input/turing_machine_seed.life ${CMAKE_BINARY_DIR}/ScalingScript/input/turing_machine_seed.life)
+
+
+######################################################################
 # Provide support for manually running Doxygen in build folder.
 ######################################################################
 configure_file(${CMAKE_SOURCE_DIR}/Utilities/Doxygen/gameoflifedoxygen.pl.in ${CMAKE_BINARY_DIR}/gameoflifedoxygen.pl)
