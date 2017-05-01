@@ -40,10 +40,14 @@ namespace gol {
 		frame next_frame(m_game_settings.number_x_cells, std::vector<gol::cell>(m_game_settings.number_y_cells, gol::dead));
 		int number_alive_cells;
 
-		for ( int i = 0 ; i < m_game_settings.number_x_cells ; ++i ) {
-			for ( int j = 0 ; j < m_game_settings.number_y_cells ; ++j ) {
-				number_alive_cells = count_alive_neighbours(i, j, current_frame);
-				next_frame[i][j] = change_state_cell(number_alive_cells, current_frame[i][j]);
+		#pragma omp parallel private(number_alive_cells), shared(next_frame)
+		{
+			#pragma omp for collapse(2)
+			for ( int i = 0 ; i < m_game_settings.number_x_cells ; ++i ) {
+				for ( int j = 0 ; j < m_game_settings.number_y_cells ; ++j ) {
+					number_alive_cells = count_alive_neighbours(i, j, current_frame);
+					next_frame[i][j] = change_state_cell(number_alive_cells, current_frame[i][j]);
+				}
 			}
 		}
 
