@@ -16,6 +16,7 @@ set(GAMEOFLIFE_SRCS
   golBasicTypes.cpp
   golInOutFrames.cpp
   golSerialGame.cpp
+  golSharedGame.cpp
 )
 
 add_library(gameoflife ${GAMEOFLIFE_SRCS})
