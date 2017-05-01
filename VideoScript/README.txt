@@ -9,9 +9,9 @@ the size of the grid and the number of steps.
 
 Starting from the build directory of the project, type the following:
 
->  cp .\bin\golSerialApp.exe .\VideoScript\Data\
+>  cp .\bin\golGameApp.exe .\VideoScript\Data\
 >  cd .\VideoScript\Data\
->  .\golSerialApp.exe -c ..\config.dat ..\gosper_glider_gun.life
+>  .\golGameApp.exe -c ..\config.dat ..\gosper_glider_gun.life
 >  mv .\config.yaml ..\
 >  cd ..
 >  python .\MakeVideo.py

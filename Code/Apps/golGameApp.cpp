@@ -28,7 +28,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
 }
 
 /**
- * \brief Run the serial version of the Game of Life.
+ * \brief Run the Game of Life.
  * \ingroup applications
  */
 int main(int argc, char** argv) {
