@@ -41,7 +41,7 @@ set(NIFTK_EP_TARBALL_LOCATION "http://cmic.cs.ucl.ac.uk/platform/dependencies")
 ##############################################################################
 # We have a super-build option. (Terminology comes from Kitware/ITK/MITK etc).
 ##############################################################################
-option(BUILD_SUPERBUILD "Build GAMEOFLIFE and the projects it depends on via SuperBuild.cmake." OFF)
+option(BUILD_SUPERBUILD "Build GAMEOFLIFE and the projects it depends on via SuperBuild.cmake." ON)
 option(BUILD_gflags "Build gflags." OFF)
 option(BUILD_glog "Build glog." OFF)
 option(BUILD_OpenCV "Build OpenCV." OFF)
@@ -236,7 +236,7 @@ endif(BUILD_TESTING)
 #
 # Users with a different version of the Boost library NEED to modify it manually. 
 ######################################################################
-set(Boost_VERSION 1.63)
+set(Boost_VERSION 1.56) 
 
 
 ######################################################################
