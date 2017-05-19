@@ -16,6 +16,10 @@
 #include "catch.hpp"
 #include "golCatchMain.h"
 
+#ifdef BUILD_OpenMPI
+#include <mpi.h>
+#endif
+
 // Global! Only do this in a private test harness.
 namespace gol
 {
@@ -38,7 +42,15 @@ int main (int argc, char * const argv[])
   if(returnCode != 0) // Indicates a command line error
     return returnCode;
 
+#ifdef BUILD_OpenMPI
+  MPI_Init (&gol::argc, &gol::argv);
+#endif
+
   int sessionReturnCode = session.run();
+
+#ifdef BUILD_OpenMPI
+  MPI_Finalize();
+#endif
 
   delete [] tmpCommandName;
   return sessionReturnCode;

@@ -20,23 +20,21 @@
 #include "golGameOfLife.h"
 #include <string>
 #include <stdexcept>
+#include <mpi.h>
 
-#ifdef _OPENMP
-#include <omp.h>
-#endif
 
 /**
-* \file golSerialSharedGame.h
-* \brief This class evolves the system with either a serial or shared (OpenMP) solution
+* \file golDistributedGame.h
+* \brief This class evolves the system with a distributed (OpenMPI) solution
 * \ingroup utilities
 */
 namespace gol
 {
 
 /**
-* \brief The class SerialSharedGame implements the game with either shared or no parallelisation. 
+* \brief The class DistributedGame implements the game usign OpenMPI. 
 */
-GAMEOFLIFE_WINEXPORT class SerialSharedGame : public GameOfLife {
+GAMEOFLIFE_WINEXPORT class DistributedGame : public GameOfLife {
 
   public:
 
@@ -44,7 +42,7 @@ GAMEOFLIFE_WINEXPORT class SerialSharedGame : public GameOfLife {
   	/**
     * \param game_settings specifies the size of the grid in which the game is played.
     */
-  	SerialSharedGame(game_parameters game_settings);
+  	DistributedGame(game_parameters game_settings);
 
 		/// Method to evolve a frame by one time step.
 		void evolve(frame & current_frame);
