@@ -63,6 +63,17 @@ have a version of Boost that is different from the one assumed here (1.56.0).
 In that case, you will have to modify the ./CMakeLists.txt file (replace 1.56
 with your version number in line 238).
 
+Finally, you can decide which parallelisation technique to use for the project.
+At the moment you have two choices. If you want to parallelise the serial solution
+with OpenMP, then set the following 
+
+  * BUILD_OpenMP:BOOL=ON
+  
+If you want to parallelise it with OpenMPI, set
+
+  * BUILD_OpenMPI:BOOL=ON
+
+Notice that the OpenMPI solution has not been implemented yet.
 
 Build Instructions
 -----------------------------
